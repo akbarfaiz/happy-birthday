@@ -40,6 +40,27 @@ body {
     pointer-events: none; 
 }
 
+#konten-pembuka-frame {
+    /* Ukuran agar tidak menyentuh tepi layar */
+    width: 80%; 
+    height: 80%;
+
+    /* Bingkai Emas */
+    border: 5px solid #FFD700; 
+    border-radius: 15px; 
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); 
+
+    /* Pastikan konten di dalamnya ditengah */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Jarak antara konten dan bingkai */
+    
+    /* Warna latar belakang transparan agar bingkai terlihat */
+    background-color: rgba(74, 54, 45, 0.8); 
+}
+
 #kontainer-pembuka h2 {
     font-family: 'Dancing Script', cursive;
     font-size: 3em;
