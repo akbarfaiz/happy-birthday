@@ -1,0 +1,421 @@
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Playfair Display', serif;
+    color: #FFEC8B; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    position: relative; 
+    background-color: #4A362D;
+}
+
+/* ------------------------------------------- */
+/* --- Style untuk Kontainer PEMBUKA --- */
+/* ------------------------------------------- */
+#kontainer-pembuka {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #4A362D; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+    text-align: center;
+    transition: opacity 0.01s ease-in-out; 
+}
+
+#kontainer-pembuka.hidden {
+    opacity: 0;
+    pointer-events: none; 
+}
+
+#kontainer-pembuka h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3em;
+    color: #FFD700; 
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+#open-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    background: linear-gradient(135deg, #FFD700, #DAA520, #FFD700);
+    color: #4A3000;
+    font-weight: bold;
+    border: 2px solid #C19A2E;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#open-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+/* ------------------------------------------- */
+
+/* --- Style untuk Kontainer Teks Utama --- */
+.kontainer-utama {
+    max-width: 700px;
+    padding: 30px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    z-index: 10;
+    
+    /* Transisi untuk zoom-in */
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+}
+
+/* KONDISI AWAL UNTUK ZOOM-IN */
+.kontainer-utama.hidden-initial {
+    opacity: 0;
+    transform: scale(0.8); 
+}
+
+/* KONDISI AKHIR SETELAH hidden-initial DIHAPUS */
+.kontainer-utama:not(.hidden-initial) {
+    opacity: 1;
+    transform: scale(1); 
+}
+
+.judul {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.8em;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.pesan-utama {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    line-height: 1.6;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #EAD8A7; 
+}
+
+.pesan-cinta {
+    font-family: 'Georgia', serif;
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    color: #FFEC8B;
+}
+
+/* --- Gaya untuk Tombol Play --- */
+#play-button {
+    margin-top: 30px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #FFD700, #DAA520, #FFD700);
+    color: #4A3000;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 2px solid #C19A2E;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 1s ease-out, transform 1s ease-out;
+    transform: scale(0.8);
+}
+
+#play-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------------------------------------------- */
+/* --- Animasi Chibi (Goyang) --- */
+/* ---------------------------------------------------- */
+@keyframes sway {
+    25% { transform: scale(1) translateX(5px) rotate(4deg); } /* Pertahankan scale(1) */
+    75% { transform: scale(1) translateX(-5px) rotate(-4deg); } /* Pertahankan scale(1) */
+}
+@keyframes sway-reverse {
+    25% { transform: scale(1) translateX(-5px) rotate(-4deg); } /* Pertahankan scale(1) */
+    75% { transform: scale(1) translateX(5px) rotate(4deg); } /* Pertahankan scale(1) */
+}
+/* --- Animasi Maju-Mundur untuk Chibi Popup (Mirip Beat) --- */
+@keyframes beat-pulse {
+    0%, 100% { transform: scale(1); } 
+    50% { transform: scale(1.05); } 
+}
+
+/* --- Gaya untuk Setiap Karakter Chibi di Sudut --- */
+.chibi-common {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 5;
+    /* Transisi untuk zoom-in */
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+}
+
+/* KONDISI AWAL CHIBI (Tersembunyi dan Kecil) */
+.chibi-common.chibi-hidden {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* KONDISI AKTIF UNTUK MEMULAI ANIMASI GOYANG */
+/* Animation 'sway' hanya diterapkan setelah transisi zoom selesai (melalui JS) */
+.chibi-top-left.sway-active {
+    animation: sway-reverse 3s ease-in-out infinite;
+}
+
+.chibi-top-right.sway-active {
+    animation: sway 3s ease-in-out infinite;
+}
+
+.chibi-bottom-left.sway-active {
+    animation: sway-reverse 3s ease-in-out infinite;
+}
+
+.chibi-bottom-right.sway-active {
+    animation: sway 3s ease-in-out infinite;
+}
+
+/* --- Pengaturan Posisi/Gambar Chibi --- */
+.chibi-top-left {
+    top: 20px;
+    left: 20px;
+    background-image: url('Waguri/Waguri_sing.png');
+}
+
+.chibi-top-right {
+    top: 20px;
+    right: 20px;
+    background-image: url('Waguri/Waguri_shop.png');
+}
+
+.chibi-bottom-left {
+    bottom: 20px;
+    left: 20px;
+    background-image: url('Waguri/Waguri_soft.png');
+}
+
+.chibi-bottom-right {
+    bottom: 20px;
+    right: 20px;
+    background-image: url('Waguri/Waguri_school.png');
+}
+
+/* --- Media Queries untuk Responsivitas HP --- */
+@media (max-width: 768px) {
+    .kontainer-utama {
+        width: 90%;
+        padding: 20px 15px;
+        margin: 20px auto;
+    }
+
+    .judul {
+        font-size: 2.2em;
+    }
+
+    .pesan-utama {
+        font-size: 1.1em;
+    }
+
+    .pesan-cinta {
+        font-size: 0.8em;
+    }
+
+    .chibi-common {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Mengatur posisi setiap chibi secara terpisah untuk mobile */
+    .chibi-top-left {
+        top: 40px;
+        left: 10px;
+        right: auto;
+        bottom: auto;
+    }
+
+    .chibi-top-right {
+        top: 40px;
+        right: 10px;
+        left: auto;
+        bottom: auto;
+    }
+
+    .chibi-bottom-left {
+        bottom: 40px;
+        left: 10px;
+        top: auto;
+        right: auto;
+    }
+
+    .chibi-bottom-right {
+        bottom: 40px;
+        right: 10px;
+        top: auto;
+        left: auto;
+    }
+}
+
+/* --- Style untuk Popup --- */
+#popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease-in-out;
+    padding: 10px; 
+    box-sizing: border-box; 
+}
+
+#popup-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+#popup-konten {
+    background-color: #fcf2bd;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    position: relative;
+
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    transform: scale(0.9);
+}
+
+#popup-overlay.show #popup-konten {
+    transform: scale(1);
+}
+
+
+#chibi-popup {
+    color: #4A3000;
+    width: 150px;
+    margin-left: auto; 
+    margin-right: auto;
+    display: block;
+    animation: beat-pulse 0.8s ease-in-out infinite; 
+}
+
+#popup-pesan {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    color: #4A362D; 
+    margin: 0;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+#pesan-bintang {
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.2em; /* Ukuran yang sedikit lebih kecil dari pesan utama */
+    color: #4A362D; /* Warna kontras yang sama */
+    margin-top: 0; /* PENTING: Menghilangkan margin bawaan di atas */
+    margin-bottom: 15px; /* Memberi jarak ke pesan panjang berikutnya */
+    line-height: 1.2;
+}
+
+#pesan-panjang {
+    font-family: 'Playfair Display', serif; 
+    font-size: 1em;
+    color: #4A362D; 
+    margin-top: 15px;
+    line-height: 1.4;
+    margin-top: 15px;
+}
+
+#dukungan {
+    font-family: 'Dancing Script', cursive; 
+    font-size: 1.2em; 
+    color: #B8860B; 
+    font-weight: bold;
+    margin-top: 20px;
+    line-height: 1.4;
+}
+
+#close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #7E6C34;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+#close-popup-btn:hover {
+    color: #5C4B30; 
+}
+
+/* --- Konfeti Animasi --- */
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; 
+    z-index: 1; 
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FFEC8B; 
+    opacity: 0; 
+    border-radius: 50%; 
+    animation: fall linear infinite; 
+}
+
+.confetti:nth-child(2n) { background-color: #FFD700; } 
+.confetti:nth-child(3n) { background-color: #DAA520; } 
+.confetti:nth-child(4n) { background-color: #EAD8A7; border-radius: 0; } 
+.confetti:nth-child(5n) { background-color: #B8860B; } 
+
+@keyframes fall {
+    0% {
+        transform: translate(0, -100px) rotateZ(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 100vh) rotateZ(720deg); 
+        opacity: 0;
+    }
+}

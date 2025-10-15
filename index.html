@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Nadin!</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/8/84/Gift_Flat_Icon_Vector.svg">
+    <audio id="background-music" loop>
+        <source src="Golden.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</head>
+<body>
+    <div id="confetti-container"></div>
+
+    <div id="kontainer-pembuka">
+        <h2>Buka Hadiah Mu!</h2>
+        <button id="open-button">Open  🎁</button>
+        <p>Siap - siap ada lagu nya hehe 😁</p>
+    </div>
+
+    <div class="chibi-top-left chibi-common chibi-hidden"></div>
+    <div class="chibi-top-right chibi-common chibi-hidden"></div>
+    <div class="chibi-bottom-left chibi-common chibi-hidden"></div>
+    <div class="chibi-bottom-right chibi-common chibi-hidden"></div>
+
+    <div class="kontainer-utama hidden-initial">
+        <h1 class="judul">Happy Birthday, Nadin!</h1>
+        <p class="pesan-utama">May your day sparkle with joy</p>
+        <p class="pesan-cinta">"Teruslah bersinar, kamu terlahir untuk menjadi luar biasa."</p>
+        <p class="pesan-cinta">Semoga semua harapanmu menjadi kenyataan.</p>
+        <button id="play-button">Click Me 😊</button>
+    </div>
+
+    <div id="popup-overlay">
+        <div id="popup-konten">
+            <button id="close-popup-btn">&times;</button>
+            <img src="Waguri/Waguri_gift.png" alt="Chibi Popup" id="chibi-popup">
+            <p id="popup-pesan">For my golden star!</p>
+            
+            <p id="pesan-bintang">Bintang yang masih jauh untuk kuraih</p> 
+
+            <p id="pesan-panjang">
+                Teruslah jadi diri sendiri yang luar biasa. Aku tahu kamu bisa meraih semua impianmu. Semoga hari ulang tahunmu menjadi hal yang selalu membawa kebahagiaan, keberuntungan, dan ketenangan.<br>Happy Birthday, Nadin! 😊
+            </p>
+
+            <p id="dukungan">Meski kita tak berada di tempat yang sama, Aku akan selalu ada di sini untuk mendoakan dan mendukungmu.</p>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('background-music');
+        const openButton = document.getElementById('open-button'); 
+        const kontainerPembuka = document.getElementById('kontainer-pembuka'); 
+        const kontainerUtama = document.querySelector('.kontainer-utama');
+        const chibis = document.querySelectorAll('.chibi-common');
+        const playButton = document.getElementById('play-button');
+        const popupOverlay = document.getElementById('popup-overlay');
+        const closePopupButton = document.getElementById('close-popup-btn');
+
+        const ANIMATION_DURATION = 1500; // 1.5 detik, sesuai dengan transisi CSS
+
+        // MULA-MULA SEMBUNYIKAN playButton (agar tidak muncul saat transisi)
+        playButton.style.opacity = '0';
+        playButton.style.pointerEvents = 'none';
+
+        openButton.addEventListener('click', () => {
+            // 1. Memutar lagu
+            audio.play().catch(error => {
+                console.log("Gagal memutar audio:", error);
+            });
+
+            // 2. Kontainer Pembuka hilang secara instan
+            kontainerPembuka.classList.add('hidden');
+            
+            // 3. Kontainer Utama & Chibi mulai transisi Zoom-In
+            kontainerUtama.classList.remove('hidden-initial');
+            chibis.forEach(chibi => {
+                chibi.classList.remove('chibi-hidden');
+            });
+
+            // 4. Setelah animasi zoom-in selesai (1.5s):
+            setTimeout(() => {
+                // Tampilkan tombol play
+                playButton.style.opacity = '1';
+                playButton.style.pointerEvents = 'auto';
+
+                // **TAMBAHAN PENTING:** Tambahkan kelas untuk memulai animasi goyang
+                chibis.forEach(chibi => {
+                    // Kelas ini akan memicu animasi 'sway' di CSS
+                    chibi.classList.add('sway-active'); 
+                });
+            }, ANIMATION_DURATION); 
+        });
+
+        playButton.addEventListener('click', () => {
+            popupOverlay.classList.add('show');
+        });
+
+        closePopupButton.addEventListener('click', () => {
+            popupOverlay.classList.remove('show');
+        });
+
+        // JavaScript untuk Konfeti (Tidak Berubah)
+        const confettiContainer = document.getElementById('confetti-container');
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confettiContainer.appendChild(confetti);
+
+            confetti.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 8 + 5;
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+            
+            confetti.style.animationDuration = Math.random() * 4 + 6 + 's';
+            confetti.style.animationDelay = Math.random() * 5 + 's';
+
+            confetti.addEventListener('animationend', () => {
+                confetti.remove();
+            });
+        }
+
+        for (let i = 0; i < 200; i++) {
+            createConfetti();
+        }
+
+        setInterval(createConfetti, 300); 
+    </script>
+</body>
+</html>
