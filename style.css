@@ -167,7 +167,7 @@ body {
 #mute-button {
     /* Penempatan Fixed di Tengah Bawah */
     position: fixed;
-    bottom: 50px; /* Jarak dari bawah, sejajar dengan chibis bawah */
+    bottom: 20px; /* Jarak dari bawah, sejajar dengan chibis bawah */
     left: 50%; /* Pindahkan titik awal ke tengah */
     transform: translateX(-50%) scale(0.8); /* Geser kembali 50% lebar tombol dan mulai kecil */
     z-index: 50; 
@@ -196,6 +196,12 @@ body {
 #mute-button:hover {
     /* Hover harus mempertahankan posisi X */
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+#audio-icon {
+    width: 5vh; 
+    height: 5vh;
+    margin: 0;
 }
 
 /* ---------------------------------------------------- */
