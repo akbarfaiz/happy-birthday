@@ -36,6 +36,8 @@
         <button id="play-button">Click Me 😊</button>
     </div>
 
+    <button id="mute-button" class="action-button">🎵</button>
+
     <div id="popup-overlay">
         <div id="popup-konten">
             <button id="close-popup-btn">&times;</button>
@@ -59,6 +61,7 @@
         const kontainerUtama = document.querySelector('.kontainer-utama');
         const chibis = document.querySelectorAll('.chibi-common');
         const playButton = document.getElementById('play-button');
+        const muteButton = document.getElementById('mute-button');
         const popupOverlay = document.getElementById('popup-overlay');
         const closePopupButton = document.getElementById('close-popup-btn');
 
@@ -67,6 +70,8 @@
         // MULA-MULA SEMBUNYIKAN playButton (agar tidak muncul saat transisi)
         playButton.style.opacity = '0';
         playButton.style.pointerEvents = 'none';
+        muteButton.style.opacity = '0';
+        muteButton.style.pointerEvents = 'none';
 
         openButton.addEventListener('click', () => {
             // 1. Memutar lagu
@@ -89,6 +94,10 @@
                 playButton.style.opacity = '1';
                 playButton.style.pointerEvents = 'auto';
 
+                // Tampilkan tombol mute dan berikan efek zoom
+                muteButton.style.opacity = '1'; 
+                muteButton.style.pointerEvents = 'auto';
+
                 // **TAMBAHAN PENTING:** Tambahkan kelas untuk memulai animasi goyang
                 chibis.forEach(chibi => {
                     // Kelas ini akan memicu animasi 'sway' di CSS
@@ -99,6 +108,16 @@
 
         playButton.addEventListener('click', () => {
             popupOverlay.classList.add('show');
+        });
+
+        muteButton.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                muteButton.textContent = '🔊'; // Not musik (Unmute)
+            } else {
+                audio.muted = true;
+                muteButton.textContent = '🔇'; // Speaker disilang (Mute)
+            }
         });
 
         closePopupButton.addEventListener('click', () => {

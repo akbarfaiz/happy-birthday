@@ -164,6 +164,40 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+#mute-button {
+    /* Penempatan Fixed di Tengah Bawah */
+    position: fixed;
+    bottom: 50px; /* Jarak dari bawah, sejajar dengan chibis bawah */
+    left: 50%; /* Pindahkan titik awal ke tengah */
+    transform: translateX(-50%) scale(0.8); /* Geser kembali 50% lebar tombol dan mulai kecil */
+    z-index: 50; 
+
+    /* Desain Menyerupai Tombol Play */
+    padding: 12px 15px; 
+    font-size: 1.5em; 
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    
+    background: linear-gradient(135deg, #FFD700, #DAA520, #FFD700);
+    color: #4A3000;
+    font-weight: bold;
+    border: 2px solid #C19A2E;
+    border-radius: 50%; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    
+    /* Transisi untuk Zoom-In */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 1s ease-out, transform 1s ease-out;
+
+    /* Kondisi Awal (Disembunyikan) */
+    opacity: 0;
+    pointer-events: none;
+}
+
+#mute-button:hover {
+    /* Hover harus mempertahankan posisi X */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* ---------------------------------------------------- */
 /* --- Animasi Chibi (Goyang) --- */
 /* ---------------------------------------------------- */
@@ -385,7 +419,7 @@ body {
 
 #close-popup-btn {
     position: absolute;
-    top: 10px;
+    top: 20px;
     right: 15px;
     font-size: 2em;
     font-weight: bold;
